@@ -1,5 +1,10 @@
 import Box from "@mui/material/Box";
+import { LoginForm } from "../components/LoginForm";
 
-export const AuthPage = ({ children }: React.PropsWithChildren) => {
-  return <Box>{children}</Box>;
+interface AuthPageProps {
+  login?: boolean;
+}
+
+export const AuthPage = ({ login = false }: AuthPageProps) => {
+  return <Box>{login && <LoginForm />}</Box>;
 };
