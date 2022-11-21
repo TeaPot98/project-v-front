@@ -7,6 +7,7 @@ export default {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "prettier",
   ],
   overrides: [],
   parser: "@typescript-eslint/parser",
