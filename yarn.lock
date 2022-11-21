@@ -10886,6 +10886,7 @@ __metadata:
     prettier: 2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-hook-form: ^7.39.5
     react-scripts: 5.0.1
     typescript: ^4.4.2
     web-vitals: ^2.1.0
@@ -11099,6 +11100,15 @@ __metadata:
   version: 6.0.11
   resolution: "react-error-overlay@npm:6.0.11"
   checksum: ce7b44c38fadba9cedd7c095cf39192e632daeccf1d0747292ed524f17dcb056d16bc197ddee5723f9dd888f0b9b19c3b486c430319e30504289b9296f2d2c42
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.39.5":
+  version: 7.39.5
+  resolution: "react-hook-form@npm:7.39.5"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 91bc9543c17b9924c0786fbc4fed6b9d85db52843cdb053de81c9a7c8ad5cb9b28a39615b1b67196f6bdf49fa92c14cd924238c2555be0c23591273713041f88
   languageName: node
   linkType: hard
 
