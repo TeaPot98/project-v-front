@@ -6,17 +6,17 @@ import Typography from "@mui/material/Typography";
 
 interface TopBarProps {
   drawerOpen: boolean;
-  handleDrawerOpen: () => void;
+  handleMenuOpen: () => void;
 }
 
-export const TopBar = ({ drawerOpen, handleDrawerOpen }: TopBarProps) => {
+export const TopBar = ({ drawerOpen, handleMenuOpen }: TopBarProps) => {
   return (
     <AppBar position="fixed" drawerOpen={drawerOpen} elevation={0}>
       <Toolbar>
         <IconButton
           color="inherit"
           aria-label="open drawer"
-          onClick={handleDrawerOpen}
+          onClick={handleMenuOpen}
           edge="start"
           sx={{
             marginRight: 5,

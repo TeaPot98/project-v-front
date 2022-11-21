@@ -2,7 +2,7 @@ import { CSSObject, Theme, styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 
 interface DrawerProps {
-  width: string | number;
+  width?: string | number;
 }
 
 const openedMixin = (
