@@ -10190,6 +10190,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:2.7.1":
+  version: 2.7.1
+  resolution: "prettier@npm:2.7.1"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
+  languageName: node
+  linkType: hard
+
 "pretty-bytes@npm:^5.3.0, pretty-bytes@npm:^5.4.1":
   version: 5.6.0
   resolution: "pretty-bytes@npm:5.6.0"
@@ -10263,6 +10272,7 @@ __metadata:
     "@typescript-eslint/parser": latest
     eslint: latest
     eslint-plugin-react: latest
+    prettier: 2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-scripts: 5.0.1
