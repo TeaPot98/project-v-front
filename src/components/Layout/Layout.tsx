@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Menu, DrawerHeader, TopBar } from "components";
+import { Menu, TopBar, Container } from "components";
 import CssBaseline from "@mui/material/CssBaseline";
 
 export const Layout = () => {
@@ -19,9 +19,7 @@ export const Layout = () => {
       <CssBaseline />
       <TopBar drawerOpen={open} handleMenuOpen={handleMenuOpen} />
       <Menu open={open} onClose={handleMenuClose} />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-      </Box>
+      <Container />
     </Box>
   );
 };
