@@ -6,5 +6,18 @@ interface AuthPageProps {
 }
 
 export const AuthPage = ({ login = false }: AuthPageProps) => {
-  return <Box>{login && <LoginForm />}</Box>;
+  return (
+    <Box
+      sx={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "whitesmoke",
+      }}
+    >
+      {login && <LoginForm />}
+    </Box>
+  );
 };

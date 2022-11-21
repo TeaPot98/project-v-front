@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import TextField from "@mui/material/TextField";
 
 interface LoginFormInputs {
   username: string;
@@ -13,8 +14,8 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("username")} />
-      <input {...register("password")} />
+      <TextField {...register("username")} />
+      <TextField {...register("password")} />
       <button type="submit">Submit</button>
     </form>
   );
