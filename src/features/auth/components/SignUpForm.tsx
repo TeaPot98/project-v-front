@@ -11,7 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import { Form } from "components";
 import { UserRole, userRoles } from "utils";
 
-interface SignUpFormInputs {
+export interface SignUpFormInputs {
   name: string;
   surname: string;
   username: string;

@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 
 import { Form } from "components";
 
-interface LoginFormInputs {
+export interface LoginFormInputs {
   username: string;
   password: string;
 }
