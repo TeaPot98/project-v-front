@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -10,6 +11,7 @@ import FormControl from "@mui/material/FormControl";
 
 import { Form } from "components";
 import { UserRole, userRoles } from "utils";
+import api from "api";
 
 export interface SignUpFormInputs {
   name: string;
@@ -22,8 +24,12 @@ export interface SignUpFormInputs {
 export const SignUpForm = () => {
   const { register, handleSubmit } = useForm<SignUpFormInputs>();
 
-  const onSubmit: SubmitHandler<SignUpFormInputs> = async (data) => {
-    console.log(data);
+  const signUpMutation = useMutation((credentials: SignUpFormInputs) =>
+    api.auth.signUp(credentials)
+  );
+
+  const onSubmit: SubmitHandler<SignUpFormInputs> = (data) => {
+    signUpMutation.mutate(data);
   };
 
   return (
