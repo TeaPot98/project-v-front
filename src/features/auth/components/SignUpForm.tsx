@@ -18,7 +18,7 @@ export interface SignUpFormInputs {
   surname: string;
   username: string;
   password: string;
-  role: `${UserRole}`;
+  role: UserRole;
 }
 
 export const SignUpForm = () => {
