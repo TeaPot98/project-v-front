@@ -13,7 +13,7 @@ export const auth = {
     return response.data;
   },
   getLoggedUser: async (token: string) => {
-    const response = await axios.get<LoggedUser>("logged-user", {
+    const response = await axios.get<LoggedUser>("users/logged", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
