@@ -9,8 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
-import { Form } from "components";
 import { UserRole, userRoles } from "utils";
+import { Form } from "components";
 import api from "api";
 
 export interface SignUpFormInputs {

@@ -1,13 +1,8 @@
 import Box from "@mui/material/Box";
 
 import { LoginForm } from "../components/LoginForm";
-import { SignUpForm } from "../components/SignUpForm";
 
-interface AuthPageProps {
-  login?: boolean;
-}
-
-export const AuthPage = ({ login = false }: AuthPageProps) => {
+export const AuthPage = () => {
   return (
     <Box
       sx={{
@@ -19,7 +14,7 @@ export const AuthPage = ({ login = false }: AuthPageProps) => {
         backgroundColor: "whitesmoke",
       }}
     >
-      {login ? <LoginForm /> : <SignUpForm />}
+      <LoginForm />
     </Box>
   );
 };

@@ -18,7 +18,7 @@ const App = () => {
           path="/"
           element={user ? <Layout /> : <Navigate to="/login" />}
         />
-        <Route path="/login" element={<AuthPage login />} />
+        <Route path="/login" element={<AuthPage />} />
       </Routes>
     </div>
   );
