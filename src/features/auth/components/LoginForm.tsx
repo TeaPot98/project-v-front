@@ -1,5 +1,6 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -14,10 +15,19 @@ export interface LoginFormInputs {
 }
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm<LoginFormInputs>();
 
-  const loginMutation = useMutation((credentials: LoginFormInputs) =>
-    api.auth.login(credentials)
+  const loginMutation = useMutation(
+    (credentials: LoginFormInputs) => api.auth.login(credentials),
+    {
+      onSuccess: (loggedUser) => {
+        window.localStorage.setItem("user-token", loggedUser.token);
+        queryClient.invalidateQueries({ queryKey: ["logged-user"] });
+        navigate("/");
+      },
+    }
   );
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {

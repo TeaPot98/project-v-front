@@ -6,6 +6,7 @@ import React from "react";
 import reportWebVitals from "./reportWebVitals";
 import "./global.css";
 import App from "./App";
+import { UserProvider } from "context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,7 +18,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </QueryClientProvider>
     </Router>
   </React.StrictMode>
