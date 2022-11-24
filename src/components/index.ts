@@ -5,3 +5,4 @@ export * from "./TopBar";
 export * from "./Menu";
 export * from "./Container";
 export * from "./Form";
+export * from "./InitialsAvatar";

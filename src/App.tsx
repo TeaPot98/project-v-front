@@ -1,10 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-
-import { Layout } from "components";
-import { AuthPage } from "features/auth/pages/AuthPage";
-import CssBaseline from "@mui/material/CssBaseline";
 import { useContext } from "react";
+
+import CssBaseline from "@mui/material/CssBaseline";
+
+import { AuthPage } from "features/auth/pages/AuthPage";
 import { UserContext } from "context";
+import { Layout } from "components";
 
 const App = () => {
   const { user } = useContext(UserContext);
