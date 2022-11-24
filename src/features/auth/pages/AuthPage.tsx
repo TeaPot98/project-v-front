@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 
-import { LoginForm } from "../components/LoginForm";
+import { LoginForm } from "features/auth";
 
 export const AuthPage = () => {
   return (
