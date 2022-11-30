@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
 
-import { AuthPage } from "features/auth/pages/AuthPage";
+import { AuthPage } from "features/auth";
 import { UserContext } from "context";
 import { Layout } from "components";
 
