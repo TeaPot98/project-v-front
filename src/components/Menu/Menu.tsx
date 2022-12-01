@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -13,6 +15,8 @@ interface MenuProps {
 }
 
 export const Menu = ({ open, onClose }: MenuProps) => {
+  const navigate = useNavigate();
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
@@ -22,12 +26,23 @@ export const Menu = ({ open, onClose }: MenuProps) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <MenuItem text="Users" menuIsOpen={open} icon={<PersonIcon />} />
-        <MenuItem text="Patients" menuIsOpen={open} icon={<PersonIcon />} />
+        <MenuItem
+          text="Patients"
+          menuIsOpen={open}
+          icon={<PersonIcon />}
+          onClick={() => navigate("/patients")}
+        />
         <MenuItem
           text="Patient Types"
           menuIsOpen={open}
           icon={<PersonIcon />}
+          onClick={() => navigate("/patient-types")}
+        />
+        <MenuItem
+          text="Users"
+          menuIsOpen={open}
+          icon={<PersonIcon />}
+          onClick={() => navigate("/users")}
         />
       </List>
     </Drawer>

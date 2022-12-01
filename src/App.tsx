@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
 
-import { AuthPage } from "features/auth";
+import { AuthPage } from "features/auth/pages";
 import { UserContext } from "context";
 import { Layout } from "components";
 
@@ -16,9 +16,15 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={user ? <Layout /> : <Navigate to="/login" />}
+          element={
+            user ? <Navigate to="/patients" /> : <Navigate to="/login" />
+          }
         />
         <Route path="/login" element={<AuthPage />} />
+        <Route
+          path="/*"
+          element={user ? <Layout /> : <Navigate to="/login" />}
+        />
       </Routes>
     </div>
   );

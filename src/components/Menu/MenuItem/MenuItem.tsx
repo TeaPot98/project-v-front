@@ -7,12 +7,19 @@ interface MenuItemProps {
   menuIsOpen?: boolean;
   icon?: React.ReactNode;
   text?: string;
+  onClick?: () => void;
 }
 
-export const MenuItem = ({ menuIsOpen, icon, text }: MenuItemProps) => {
+export const MenuItem = ({
+  menuIsOpen,
+  icon,
+  text,
+  onClick,
+}: MenuItemProps) => {
   return (
     <ListItem disablePadding sx={{ display: "block" }}>
       <ListItemButton
+        onClick={onClick}
         sx={{
           minHeight: 48,
           justifyContent: menuIsOpen ? "initial" : "center",

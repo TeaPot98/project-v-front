@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import api, { initializeAxios } from "api";
+
+import CircularProgress from "@mui/material/CircularProgress";
+
 import { LoggedUser } from "models/user";
+import api, { initializeAxios } from "api";
 import React, { useRef } from "react";
 import { preventQueryRefetch } from "utils";
 
@@ -17,7 +20,10 @@ export const UserProvider = ({ children }: React.PropsWithChildren) => {
     ["logged-user"],
     () => {
       const token = window.localStorage.getItem("user-token");
-      if (!token) throw new Error("Invalid token");
+      if (!token) {
+        user.current = undefined;
+        throw new Error("Invalid token");
+      }
 
       initializeAxios(token);
       return api.auth.getLoggedUser(token);
@@ -31,7 +37,7 @@ export const UserProvider = ({ children }: React.PropsWithChildren) => {
     }
   );
 
-  if (isLoading) return <></>;
+  if (isLoading) return <CircularProgress />;
 
   return (
     <UserContext.Provider value={{ user: user.current }}>
