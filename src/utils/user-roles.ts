@@ -4,7 +4,7 @@ export enum UserRole {
   USER = "user",
 }
 
-export const userRoles = [
+export const userRoles: { key: UserRole; label: string }[] = [
   {
     key: UserRole.ADMIN,
     label: "Admin",

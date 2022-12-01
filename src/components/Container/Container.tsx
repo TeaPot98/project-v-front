@@ -9,13 +9,25 @@ import { PatientTypes } from "features/patient-types/pages";
 
 export const Container = () => {
   return (
-    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        p: 3,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
+    >
       <DrawerHeader />
-      <Routes>
-        <Route path="users" element={<Users />} />
-        <Route path="patients" element={<Patients />} />
-        <Route path="patient-types" element={<PatientTypes />} />
-      </Routes>
+      <Box sx={{ overflowY: "hidden", height: "100%" }}>
+        <Routes>
+          <Route path="users" element={<Users />} />
+          <Route path="patients" element={<Patients />} />
+          <Route path="patient-types" element={<PatientTypes />} />
+        </Routes>
+      </Box>
     </Box>
   );
 };

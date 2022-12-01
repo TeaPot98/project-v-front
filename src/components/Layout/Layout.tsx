@@ -15,7 +15,7 @@ export const Layout = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: "100%" }}>
       <CssBaseline />
       <TopBar drawerOpen={open} handleMenuOpen={handleMenuOpen} />
       <Menu open={open} onClose={handleMenuClose} />

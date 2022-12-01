@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
 
 import { AuthPage } from "features/auth/pages";
 import { UserContext } from "context";
@@ -11,7 +12,7 @@ const App = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="App">
+    <Box className="App">
       <CssBaseline />
       <Routes>
         <Route
@@ -26,7 +27,7 @@ const App = () => {
           element={user ? <Layout /> : <Navigate to="/login" />}
         />
       </Routes>
-    </div>
+    </Box>
   );
 };
 
