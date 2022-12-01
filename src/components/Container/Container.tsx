@@ -6,6 +6,7 @@ import { Users } from "features/users/pages";
 import { DrawerHeader } from "components";
 import { Patients } from "features/patients/pages";
 import { PatientTypes } from "features/patient-types/pages";
+import { PatientTypeEdit } from "features/patient-types/pages";
 
 export const Container = () => {
   return (
@@ -21,11 +22,12 @@ export const Container = () => {
       }}
     >
       <DrawerHeader />
-      <Box sx={{ overflowY: "hidden", height: "100%" }}>
+      <Box sx={{ overflowY: "auto" }}>
         <Routes>
           <Route path="users" element={<Users />} />
           <Route path="patients" element={<Patients />} />
           <Route path="patient-types" element={<PatientTypes />} />
+          <Route path="patient-types/create" element={<PatientTypeEdit />} />
         </Routes>
       </Box>
     </Box>
