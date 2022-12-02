@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import Box from "@mui/material/Box";
+import MuiContainer from "@mui/material/Container";
 
 import { Users } from "features/users/pages";
 import { DrawerHeader } from "components";
@@ -19,17 +20,18 @@ export const Container = () => {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
+        bgcolor: "lightgray",
       }}
     >
       <DrawerHeader />
-      <Box sx={{ overflowY: "auto" }}>
+      <MuiContainer sx={{ overflowY: "auto" }}>
         <Routes>
           <Route path="users" element={<Users />} />
           <Route path="patients" element={<Patients />} />
           <Route path="patient-types" element={<PatientTypes />} />
           <Route path="patient-types/create" element={<PatientTypeEdit />} />
         </Routes>
-      </Box>
+      </MuiContainer>
     </Box>
   );
 };

@@ -104,21 +104,21 @@ export const PatientTypeEdit = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       {fieldGroups.map((fieldGroup, i) => (
-        <Box
+        <Accordion
           key={fieldGroup.id}
-          sx={{ display: "flex", alignItems: "flex-start" }}
+          expanded={expanded.includes(fieldGroup.id)}
+          onChange={handleChange(fieldGroup.id)}
+          aria-controls={`panel${i + 1}-content`}
+          id={`panel${i + 1}-header`}
+          disableGutters
         >
-          <Accordion
-            expanded={expanded.includes(fieldGroup.id)}
-            onChange={handleChange(fieldGroup.id)}
-            aria-controls={`panel${i + 1}-content`}
-            id={`panel${i + 1}-header`}
-            sx={{ flexGrow: 1 }}
-            disableGutters
-          >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Box sx={{ display: "flex" }}>
+            <AccordionSummary
+              sx={{ flexGrow: 1 }}
+              expandIcon={<ExpandMoreIcon />}
+            >
               {groupEdit?.id === fieldGroup.id ? (
                 <>
                   <TextField
@@ -174,60 +174,60 @@ export const PatientTypeEdit = () => {
                 </Typography>
               )}
             </AccordionSummary>
-            <AccordionDetails>
-              {fieldGroup.fields.map((field) => (
-                <PatientTypeField
-                  key={field.id}
-                  type={field.type}
-                  name={field.name}
-                  onEdit={() => {
-                    formModalState.current = {
-                      groupFieldId: fieldGroup.id,
-                      field,
-                    };
-                    setFormModalOpen(true);
-                  }}
-                  onDelete={() => {
-                    deleteModalState.current = {
-                      message: `field ${field.name} of type ${field.type}`,
-                      groupId: fieldGroup.id,
-                      fieldId: field.id,
-                    };
-                    setDeleteModalOpen(true);
-                  }}
-                />
-              ))}
-              <Button
-                variant="outlined"
-                sx={{
-                  display: "block",
-                  mx: "auto",
-                  borderStyle: "dashed",
-                  "&:hover": {
-                    borderStyle: "dashed",
-                  },
-                }}
-                onClick={() => {
-                  formModalState.current = { groupFieldId: fieldGroup.id };
+            <IconButton
+              onClick={() => {
+                deleteModalState.current = {
+                  message: `field group ${fieldGroup.name}`,
+                  groupId: fieldGroup.id,
+                };
+                setDeleteModalOpen(true);
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+          <AccordionDetails>
+            {fieldGroup.fields.map((field) => (
+              <PatientTypeField
+                key={field.id}
+                type={field.type}
+                name={field.name}
+                onEdit={() => {
+                  formModalState.current = {
+                    groupFieldId: fieldGroup.id,
+                    field,
+                  };
                   setFormModalOpen(true);
                 }}
-              >
-                + New Field
-              </Button>
-            </AccordionDetails>
-          </Accordion>
-          <IconButton
-            onClick={() => {
-              deleteModalState.current = {
-                message: `field group ${fieldGroup.name}`,
-                groupId: fieldGroup.id,
-              };
-              setDeleteModalOpen(true);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Box>
+                onDelete={() => {
+                  deleteModalState.current = {
+                    message: `field ${field.name} of type ${field.type}`,
+                    groupId: fieldGroup.id,
+                    fieldId: field.id,
+                  };
+                  setDeleteModalOpen(true);
+                }}
+              />
+            ))}
+            <Button
+              variant="outlined"
+              sx={{
+                display: "block",
+                mx: "auto",
+                borderStyle: "dashed",
+                "&:hover": {
+                  borderStyle: "dashed",
+                },
+              }}
+              onClick={() => {
+                formModalState.current = { groupFieldId: fieldGroup.id };
+                setFormModalOpen(true);
+              }}
+            >
+              + New Field
+            </Button>
+          </AccordionDetails>
+        </Accordion>
       ))}
       <Button
         fullWidth

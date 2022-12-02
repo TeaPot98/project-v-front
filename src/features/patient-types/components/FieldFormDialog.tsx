@@ -33,17 +33,12 @@ export const FieldFormDialog = ({
   onClose,
   onConfirm,
 }: FormDialogProps) => {
-  const { handleSubmit, register, reset } = useForm<Inputs>({
-    defaultValues: {
-      name: modalState?.field?.name,
-      type: modalState?.field?.type || FieldType.TEXT,
-    },
-  });
+  const { handleSubmit, register, reset } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (values) => onConfirm?.(values);
 
   useEffect(() => {
     reset({
-      name: modalState?.field?.name,
+      name: modalState?.field?.name || "",
       type: modalState?.field?.type || FieldType.TEXT,
     });
   }, [modalState]);
@@ -62,6 +57,7 @@ export const FieldFormDialog = ({
             label="Field name"
             fullWidth
             variant="standard"
+            defaultValue=""
             {...register("name")}
           />
           <FormControl fullWidth size="small">
@@ -70,6 +66,7 @@ export const FieldFormDialog = ({
               size="small"
               labelId="field-type"
               label="Field type"
+              defaultValue={FieldType.TEXT}
               {...register("type")}
             >
               {fieldTypes.map(({ key, label }) => (
