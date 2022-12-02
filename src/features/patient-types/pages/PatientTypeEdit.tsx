@@ -58,6 +58,18 @@ export const PatientTypeEdit = () => {
     });
   };
 
+  const closeFormModal = () => {
+    setFormModalOpen(false);
+    formModalState.current = undefined;
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+    setTimeout(() => {
+      deleteModalState.current = undefined;
+    }, 0);
+  };
+
   const saveField = (values: Omit<Field, "id">) => {
     if (!formModalState.current?.field?.id) {
       const newField = {
@@ -88,8 +100,7 @@ export const PatientTypeEdit = () => {
         })
       );
     }
-    formModalState.current = undefined;
-    setFormModalOpen(false);
+    closeFormModal();
   };
 
   return (
@@ -234,20 +245,14 @@ export const PatientTypeEdit = () => {
       <FieldFormDialog
         open={formModalOpen}
         modalState={formModalState.current}
-        onClose={() => {
-          setFormModalOpen(false);
-          formModalState.current = undefined;
-        }}
+        onClose={closeFormModal}
         onConfirm={saveField}
       />
       <ConfirmationDialog
         open={deleteModalOpen}
         title="Delete"
         contentText={`Are you sure you want to delete ${deleteModalState.current?.message} ?`}
-        onClose={() => {
-          deleteModalState.current = undefined;
-          setDeleteModalOpen(false);
-        }}
+        onClose={closeDeleteModal}
         onConfirm={() => {
           setFieldGroups((prevState) => {
             const fieldId = deleteModalState.current?.fieldId;
@@ -271,8 +276,7 @@ export const PatientTypeEdit = () => {
             }
             return prevState;
           });
-          deleteModalState.current = undefined;
-          setDeleteModalOpen(false);
+          closeDeleteModal();
         }}
       />
     </Box>
