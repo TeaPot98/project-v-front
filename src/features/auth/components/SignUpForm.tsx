@@ -9,7 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
-import { UserRole, userRoles } from "utils";
+import { UserRole } from "models/user";
+import { userRoles } from "utils";
 import { Form } from "components";
 import api from "api";
 

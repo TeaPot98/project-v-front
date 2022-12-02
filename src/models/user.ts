@@ -1,5 +1,3 @@
-import { UserRole } from "utils";
-
 export interface User {
   id: string;
   name: string;
@@ -10,4 +8,10 @@ export interface User {
 
 export interface LoggedUser extends User {
   token: string;
+}
+
+export enum UserRole {
+  ADMIN = "admin",
+  MODERATOR = "moderator",
+  USER = "user",
 }

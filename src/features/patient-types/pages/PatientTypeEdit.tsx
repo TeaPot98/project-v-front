@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import Accordion from "@mui/material/Accordion";
@@ -12,12 +12,27 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { FieldGroup, FieldType } from "types";
-import { PatientTypeField } from "../components";
+import { Field, FieldGroup } from "types";
+import {
+  FieldFormDialog,
+  FormDialogProps,
+  PatientTypeField,
+} from "../components";
+import { ConfirmationDialog } from "components";
 
 export const PatientTypeEdit = () => {
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [fieldGroups, setFieldGroups] = useState<FieldGroup[]>([]);
+
+  const [formModalOpen, setFormModalOpen] = useState(false);
+  const formModalState = useRef<FormDialogProps["modalState"]>();
+
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const deleteModalState = useRef<{
+    message: string;
+    fieldId: string;
+    groupId: string;
+  }>();
 
   const handleChange =
     (panelId: string) =>
@@ -40,6 +55,40 @@ export const PatientTypeEdit = () => {
     event.stopPropagation();
   };
 
+  const saveField = (values: Omit<Field, "id">) => {
+    if (!formModalState.current?.field?.id) {
+      const newField = {
+        ...values,
+        id: uuidv4(),
+      };
+      setFieldGroups((prevState) =>
+        prevState.map((fieldGroup) =>
+          fieldGroup.id === formModalState.current?.groupFieldId
+            ? { ...fieldGroup, fields: [...fieldGroup.fields].concat(newField) }
+            : fieldGroup
+        )
+      );
+    } else {
+      setFieldGroups((prevState) =>
+        prevState.map((fieldGroup) => {
+          if (fieldGroup.id === formModalState.current?.groupFieldId) {
+            return {
+              ...fieldGroup,
+              fields: fieldGroup.fields.map((field) =>
+                field.id === formModalState.current?.field?.id
+                  ? { ...values, id: field.id }
+                  : field
+              ),
+            };
+          }
+          return fieldGroup;
+        })
+      );
+    }
+    formModalState.current = undefined;
+    setFormModalOpen(false);
+  };
+
   return (
     <Box>
       {fieldGroups.map((fieldGroup, i) => (
@@ -52,10 +101,10 @@ export const PatientTypeEdit = () => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography sx={{ width: "33%", flexShrink: 0 }}>
+              {fieldGroup.name}
               <IconButton onClick={editGroupName}>
                 <EditIcon />
               </IconButton>
-              {fieldGroup.name}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -64,9 +113,40 @@ export const PatientTypeEdit = () => {
                 key={field.id}
                 type={field.type}
                 name={field.name}
+                onEdit={() => {
+                  formModalState.current = {
+                    groupFieldId: fieldGroup.id,
+                    field,
+                  };
+                  setFormModalOpen(true);
+                }}
+                onDelete={() => {
+                  deleteModalState.current = {
+                    message: `field ${field.name} of type ${field.type}`,
+                    groupId: fieldGroup.id,
+                    fieldId: field.id,
+                  };
+                  setDeleteModalOpen(true);
+                }}
               />
             ))}
-            <PatientTypeField type={FieldType.TEXT} name="Name Surname" />
+            <Button
+              variant="outlined"
+              sx={{
+                display: "block",
+                mx: "auto",
+                borderStyle: "dashed",
+                "&:hover": {
+                  borderStyle: "dashed",
+                },
+              }}
+              onClick={() => {
+                formModalState.current = { groupFieldId: fieldGroup.id };
+                setFormModalOpen(true);
+              }}
+            >
+              + New Field
+            </Button>
           </AccordionDetails>
         </Accordion>
       ))}
@@ -83,6 +163,50 @@ export const PatientTypeEdit = () => {
       >
         + New Field Group
       </Button>
+      <FieldFormDialog
+        open={formModalOpen}
+        modalState={formModalState.current}
+        onClose={() => {
+          setFormModalOpen(false);
+          formModalState.current = undefined;
+        }}
+        onConfirm={saveField}
+      />
+      <ConfirmationDialog
+        open={deleteModalOpen}
+        title="Delete"
+        contentText={`Are you sure you want to delete ${deleteModalState.current?.message} ?`}
+        onClose={() => {
+          deleteModalState.current = undefined;
+          setDeleteModalOpen(false);
+        }}
+        onConfirm={() => {
+          setFieldGroups((prevState) => {
+            const fieldId = deleteModalState.current?.fieldId;
+            const groupId = deleteModalState.current?.groupId;
+            if (fieldId) {
+              return prevState.map((fieldGroup) => {
+                if (fieldGroup.id === groupId) {
+                  return {
+                    ...fieldGroup,
+                    fields: fieldGroup.fields.filter(
+                      (field) => field.id !== fieldId
+                    ),
+                  };
+                }
+                return fieldGroup;
+              });
+            } else if (groupId) {
+              return prevState.filter(
+                (fieldGroup) => fieldGroup.id !== groupId
+              );
+            }
+            return prevState;
+          });
+          deleteModalState.current = undefined;
+          setDeleteModalOpen(false);
+        }}
+      />
     </Box>
   );
 };

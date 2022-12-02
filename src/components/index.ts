@@ -7,3 +7,4 @@ export * from "./Container";
 export * from "./Form";
 export * from "./InitialsAvatar";
 export * from "./Table";
+export * from "./ConfirmationDialog";

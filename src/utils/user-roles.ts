@@ -1,8 +1,4 @@
-export enum UserRole {
-  ADMIN = "admin",
-  MODERATOR = "moderator",
-  USER = "user",
-}
+import { UserRole } from "models/user";
 
 export const userRoles: { key: UserRole; label: string }[] = [
   {
