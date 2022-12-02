@@ -33,13 +33,18 @@ export const FieldFormDialog = ({
   onClose,
   onConfirm,
 }: FormDialogProps) => {
-  const { handleSubmit, register, reset } = useForm<Inputs>();
+  const { handleSubmit, register, reset } = useForm<Inputs>({
+    defaultValues: {
+      name: modalState?.field?.name,
+      type: modalState?.field?.type || FieldType.TEXT,
+    },
+  });
   const onSubmit: SubmitHandler<Inputs> = (values) => onConfirm?.(values);
 
   useEffect(() => {
     reset({
       name: modalState?.field?.name,
-      type: modalState?.field?.type,
+      type: modalState?.field?.type || FieldType.TEXT,
     });
   }, [modalState]);
 
@@ -59,14 +64,12 @@ export const FieldFormDialog = ({
             variant="standard"
             {...register("name")}
           />
-          <FormControl>
-            <InputLabel id="field-type">Role</InputLabel>
+          <FormControl fullWidth size="small">
+            <InputLabel id="field-type">Field type</InputLabel>
             <Select
-              fullWidth
               size="small"
               labelId="field-type"
-              label="Role"
-              defaultValue={modalState?.field?.type || "text"}
+              label="Field type"
               {...register("type")}
             >
               {fieldTypes.map(({ key, label }) => (

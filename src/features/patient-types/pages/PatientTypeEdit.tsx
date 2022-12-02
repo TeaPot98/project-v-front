@@ -8,9 +8,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
 
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { Field, FieldGroup } from "types";
 import {
@@ -34,6 +37,8 @@ export const PatientTypeEdit = () => {
     groupId: string;
   }>();
 
+  const [groupEdit, setGroupEdit] = useState<{ id: string; value: string }>();
+
   const handleChange =
     (panelId: string) =>
     (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -49,10 +54,6 @@ export const PatientTypeEdit = () => {
       ...prevState,
       { id: uuidv4(), name: "General information", fields: [] },
     ]);
-  };
-
-  const editGroupName = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
   };
 
   const saveField = (values: Omit<Field, "id">) => {
@@ -100,12 +101,60 @@ export const PatientTypeEdit = () => {
           id={`panel${i + 1}-header`}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              {fieldGroup.name}
-              <IconButton onClick={editGroupName}>
-                <EditIcon />
-              </IconButton>
-            </Typography>
+            {groupEdit?.id === fieldGroup.id ? (
+              <>
+                <TextField
+                  autoFocus
+                  size="small"
+                  onChange={(e) =>
+                    setGroupEdit({
+                      id: fieldGroup.id,
+                      value: e.target.value,
+                    })
+                  }
+                  value={groupEdit.value}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFieldGroups((prevState) =>
+                      prevState.map((fieldGr) =>
+                        fieldGr.id === fieldGroup.id
+                          ? { ...fieldGr, name: groupEdit?.value }
+                          : fieldGr
+                      )
+                    );
+                    setGroupEdit(undefined);
+                  }}
+                >
+                  <CheckIcon />
+                </IconButton>
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setGroupEdit(undefined);
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </>
+            ) : (
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setGroupEdit({
+                      value: fieldGroup.name,
+                      id: fieldGroup?.id,
+                    });
+                  }}
+                >
+                  <EditIcon />
+                </IconButton>
+                {fieldGroup.name}
+              </Typography>
+            )}
           </AccordionSummary>
           <AccordionDetails>
             {fieldGroup.fields.map((field) => (
