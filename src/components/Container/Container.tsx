@@ -20,7 +20,7 @@ export const Container = () => {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        bgcolor: "lightgray",
+        bgcolor: "gainsboro",
       }}
     >
       <DrawerHeader />
