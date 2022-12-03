@@ -3,8 +3,8 @@ import { axios } from "api";
 
 export const users = {
   getAll: async () => {
-    const response = await axios.get<models.User[]>("users");
-    return response.data;
+    const { data } = await axios.get<models.User[]>("users");
+    return data;
   },
 };
 

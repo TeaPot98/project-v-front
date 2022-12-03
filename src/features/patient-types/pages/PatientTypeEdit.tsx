@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 
 import Accordion from "@mui/material/Accordion";
@@ -23,14 +24,15 @@ import {
   PatientTypeField,
 } from "../components";
 import { ConfirmationDialog } from "components";
-import { PatientType } from "models/patient-type";
+import { NewPatientType } from "models/patient-type";
 import { UserContext } from "context";
+import api from "api";
 
 export const PatientTypeEdit = () => {
   const { user } = useContext(UserContext);
 
   const [expanded, setExpanded] = React.useState<string[]>([]);
-  const [formState, setFormState] = useState<Omit<PatientType, "id">>({
+  const [formState, setFormState] = useState<NewPatientType>({
     name: "",
     author: {
       name: user!.name,
@@ -50,9 +52,7 @@ export const PatientTypeEdit = () => {
     fieldId?: string;
   }>();
 
-  const [patientTypeName, setPatientTypeName] = useState<string>();
-
-  const [groupEdit, setGroupEdit] = useState<{ id: string; value: string }>();
+  const [groupEdit, setGroupEdit] = useState<{ id?: string; value: string }>();
 
   const handleChange =
     (panelId: string) =>
@@ -63,6 +63,10 @@ export const PatientTypeEdit = () => {
           : prevState.filter((id) => id !== panelId);
       });
     };
+
+  const createMutation = useMutation((data: NewPatientType) =>
+    api.patientType.create(data)
+  );
 
   const addGroupField = () => {
     const id = uuidv4();
@@ -138,10 +142,20 @@ export const PatientTypeEdit = () => {
           autoFocus
           label="Patient type name"
           size="small"
-          onChange={(e) => setPatientTypeName(e.target.value)}
-          value={patientTypeName}
+          onChange={(e) =>
+            setFormState((prevState) => ({
+              ...prevState,
+              name: e.target.value,
+            }))
+          }
+          value={formState.name}
         />
-        <Button variant="contained">Save</Button>
+        <Button
+          variant="contained"
+          onClick={() => createMutation.mutate(formState)}
+        >
+          Save
+        </Button>
       </Box>
       <Box>
         {formState.fieldGroups.map((fieldGroup, i) => (

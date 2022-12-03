@@ -10,3 +10,5 @@ export interface PatientType {
   };
   fieldGroups: FieldGroup[];
 }
+
+export type NewPatientType = Omit<PatientType, "id">;
