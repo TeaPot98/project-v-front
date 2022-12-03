@@ -132,6 +132,8 @@ export const PatientTypeEdit = () => {
         sx={{
           bgcolor: "white",
           p: "1rem",
+          borderRadius:
+            formState.fieldGroups.length === 0 ? "0.25rem" : undefined,
           borderTopLeftRadius: "0.25rem",
           borderTopRightRadius: "0.25rem",
           display: "flex",
