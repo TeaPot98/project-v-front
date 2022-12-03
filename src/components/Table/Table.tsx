@@ -13,7 +13,7 @@ export interface TableColumn {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
+  format?: (value: any) => string;
 }
 
 interface TableProps {
@@ -74,9 +74,7 @@ export const Table = ({ columns = [], rows = [] }: TableProps) => {
                           key={column.id as string}
                           align={column.align}
                         >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {column.format ? column.format(value) : value}
                         </TableCell>
                       );
                     })}

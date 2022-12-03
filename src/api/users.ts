@@ -8,7 +8,7 @@ export const users = {
   },
 };
 
-export const queries = {
+export const userQueries = {
   all: () => ({
     queryKey: ["users"],
     queryFn: users.getAll,

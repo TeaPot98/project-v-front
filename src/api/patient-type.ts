@@ -9,4 +9,15 @@ export const patientType = {
     );
     return data;
   },
+  getAll: async () => {
+    const { data } = await axios.get<PatientType[]>("/patient-types");
+    return data;
+  },
+};
+
+export const patientTypeQueries = {
+  all: () => ({
+    queryKey: ["patient-types"],
+    queryFn: () => patientType.getAll(),
+  }),
 };
