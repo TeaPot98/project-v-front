@@ -127,12 +127,13 @@ export const PatientTypeEdit = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+    <Box>
       <Box
         sx={{
           bgcolor: "white",
-          p: "0.5rem",
-          borderRadius: "0.25rem",
+          p: "1rem",
+          borderTopLeftRadius: "0.25rem",
+          borderTopRightRadius: "0.25rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -157,140 +158,137 @@ export const PatientTypeEdit = () => {
           Save
         </Button>
       </Box>
-      <Box>
-        {formState.fieldGroups.map((fieldGroup, i) => (
-          <Accordion
-            key={fieldGroup.id}
-            expanded={expanded.includes(fieldGroup.id)}
-            onChange={handleChange(fieldGroup.id)}
-            aria-controls={`panel${i + 1}-content`}
-            id={`panel${i + 1}-header`}
-            disableGutters
-            elevation={0}
-            sx={{ margin: 0 }}
-          >
-            <Box sx={{ display: "flex" }}>
-              <AccordionSummary
-                sx={{ flexGrow: 1 }}
-                expandIcon={<ExpandMoreIcon />}
-              >
-                {groupEdit?.id === fieldGroup.id ? (
-                  <>
-                    <TextField
-                      autoFocus
-                      size="small"
-                      onChange={(e) =>
-                        setGroupEdit({
-                          id: fieldGroup.id,
-                          value: e.target.value,
-                        })
-                      }
-                      value={groupEdit.value}
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setFormState((prevState) => ({
-                          ...prevState,
-                          fieldGroups: prevState.fieldGroups.map((fieldGr) =>
-                            fieldGr.id === fieldGroup.id
-                              ? { ...fieldGr, name: groupEdit?.value }
-                              : fieldGr
-                          ),
-                        }));
-                        setGroupEdit(undefined);
-                      }}
-                    >
-                      <CheckIcon />
-                    </IconButton>
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setGroupEdit(undefined);
-                      }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </>
-                ) : (
-                  <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setGroupEdit({
-                          value: fieldGroup.name,
-                          id: fieldGroup?.id,
-                        });
-                      }}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    {fieldGroup.name}
-                  </Typography>
-                )}
-              </AccordionSummary>
-              <IconButton
-                onClick={() => {
+      {formState.fieldGroups.map((fieldGroup, i) => (
+        <Accordion
+          key={fieldGroup.id}
+          expanded={expanded.includes(fieldGroup.id)}
+          onChange={handleChange(fieldGroup.id)}
+          aria-controls={`panel${i + 1}-content`}
+          id={`panel${i + 1}-header`}
+          disableGutters
+          elevation={0}
+        >
+          <Box sx={{ display: "flex" }}>
+            <AccordionSummary
+              sx={{ flexGrow: 1 }}
+              expandIcon={<ExpandMoreIcon />}
+            >
+              {groupEdit?.id === fieldGroup.id ? (
+                <>
+                  <TextField
+                    autoFocus
+                    size="small"
+                    onChange={(e) =>
+                      setGroupEdit({
+                        id: fieldGroup.id,
+                        value: e.target.value,
+                      })
+                    }
+                    value={groupEdit.value}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFormState((prevState) => ({
+                        ...prevState,
+                        fieldGroups: prevState.fieldGroups.map((fieldGr) =>
+                          fieldGr.id === fieldGroup.id
+                            ? { ...fieldGr, name: groupEdit?.value }
+                            : fieldGr
+                        ),
+                      }));
+                      setGroupEdit(undefined);
+                    }}
+                  >
+                    <CheckIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setGroupEdit(undefined);
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setGroupEdit({
+                        value: fieldGroup.name,
+                        id: fieldGroup?.id,
+                      });
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  {fieldGroup.name}
+                </Typography>
+              )}
+            </AccordionSummary>
+            <IconButton
+              onClick={() => {
+                deleteModalState.current = {
+                  message: `field group ${fieldGroup.name}`,
+                  groupId: fieldGroup.id,
+                };
+                setDeleteModalOpen(true);
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+          <AccordionDetails>
+            {fieldGroup.fields.map((field) => (
+              <PatientTypeField
+                key={field.id}
+                type={field.type}
+                name={field.name}
+                onEdit={() => {
+                  formModalState.current = {
+                    groupFieldId: fieldGroup.id,
+                    field,
+                  };
+                  setFormModalOpen(true);
+                }}
+                onDelete={() => {
                   deleteModalState.current = {
-                    message: `field group ${fieldGroup.name}`,
+                    message: `field ${field.name} of type ${field.type}`,
                     groupId: fieldGroup.id,
+                    fieldId: field.id,
                   };
                   setDeleteModalOpen(true);
                 }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-            <AccordionDetails>
-              {fieldGroup.fields.map((field) => (
-                <PatientTypeField
-                  key={field.id}
-                  type={field.type}
-                  name={field.name}
-                  onEdit={() => {
-                    formModalState.current = {
-                      groupFieldId: fieldGroup.id,
-                      field,
-                    };
-                    setFormModalOpen(true);
-                  }}
-                  onDelete={() => {
-                    deleteModalState.current = {
-                      message: `field ${field.name} of type ${field.type}`,
-                      groupId: fieldGroup.id,
-                      fieldId: field.id,
-                    };
-                    setDeleteModalOpen(true);
-                  }}
-                />
-              ))}
-              <Button
-                variant="outlined"
-                sx={{
-                  display: "block",
-                  mx: "auto",
+              />
+            ))}
+            <Button
+              variant="outlined"
+              sx={{
+                display: "block",
+                mx: "auto",
+                borderStyle: "dashed",
+                "&:hover": {
                   borderStyle: "dashed",
-                  "&:hover": {
-                    borderStyle: "dashed",
-                  },
-                }}
-                onClick={() => {
-                  formModalState.current = { groupFieldId: fieldGroup.id };
-                  setFormModalOpen(true);
-                }}
-              >
-                + New Field
-              </Button>
-            </AccordionDetails>
-          </Accordion>
-        ))}
-      </Box>
-
+                },
+              }}
+              onClick={() => {
+                formModalState.current = { groupFieldId: fieldGroup.id };
+                setFormModalOpen(true);
+              }}
+            >
+              + New Field
+            </Button>
+          </AccordionDetails>
+        </Accordion>
+      ))}
       <Button
         fullWidth
         variant="outlined"
         sx={{
+          mt: "1rem",
           borderStyle: "dashed",
           "&:hover": {
             borderStyle: "dashed",
