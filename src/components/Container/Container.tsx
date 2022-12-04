@@ -4,10 +4,9 @@ import Box from "@mui/material/Box";
 import MuiContainer from "@mui/material/Container";
 
 import { Users } from "features/users/pages";
+import { PatientEdit, Patients } from "features/patients/pages";
+import { PatientTypes, PatientTypeEdit } from "features/patient-types/pages";
 import { DrawerHeader } from "components";
-import { Patients } from "features/patients/pages";
-import { PatientTypes } from "features/patient-types/pages";
-import { PatientTypeEdit } from "features/patient-types/pages";
 
 export const Container = () => {
   return (
@@ -28,6 +27,7 @@ export const Container = () => {
         <Routes>
           <Route path="users" element={<Users />} />
           <Route path="patients" element={<Patients />} />
+          <Route path="patients/create/:typeId" element={<PatientEdit />} />
           <Route path="patient-types" element={<PatientTypes />} />
           <Route path="patient-types/create" element={<PatientTypeEdit />} />
         </Routes>

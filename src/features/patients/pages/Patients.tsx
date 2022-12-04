@@ -47,11 +47,7 @@ export const Patients = () => {
                   key={patientType.id}
                   onClick={() => {
                     popupState.close();
-                    navigate("/patients/create", {
-                      state: {
-                        patientTypeId: patientType.id,
-                      },
-                    });
+                    navigate(`/patients/create/${patientType.id}`);
                   }}
                 >
                   {patientType.name}
