@@ -4,16 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 
-import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { Field } from "types";
@@ -24,6 +19,7 @@ import {
   PatientTypeField,
 } from "../components";
 import { ConfirmationDialog } from "components";
+import { EditableText } from "components/EditableText/EditableText";
 
 interface FieldGroupsProps {
   fieldGroups: FieldGroup[];
@@ -43,7 +39,7 @@ export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
     fieldId?: string;
   }>();
 
-  const [groupEdit, setGroupEdit] = useState<{ id?: string; value: string }>();
+  const [groupEditId, setGroupEditId] = useState<string>();
 
   const handleChange =
     (panelId: string) =>
@@ -57,7 +53,7 @@ export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
 
   const addGroupField = () => {
     const id = uuidv4();
-    setGroupEdit({ id, value: "" });
+    setGroupEditId(id);
     onChange([...fieldGroups, { id, name: "", fields: [] }]);
   };
 
@@ -122,60 +118,21 @@ export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
               sx={{ flexGrow: 1 }}
               expandIcon={<ExpandMoreIcon />}
             >
-              {groupEdit?.id === fieldGroup.id ? (
-                <>
-                  <TextField
-                    autoFocus
-                    size="small"
-                    onChange={(e) =>
-                      setGroupEdit({
-                        id: fieldGroup.id,
-                        value: e.target.value,
-                      })
-                    }
-                    value={groupEdit.value}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onChange(
-                        fieldGroups.map((fieldGr) =>
-                          fieldGr.id === fieldGroup.id
-                            ? { ...fieldGr, name: groupEdit?.value }
-                            : fieldGr
-                        )
-                      );
-                      setGroupEdit(undefined);
-                    }}
-                  >
-                    <CheckIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setGroupEdit(undefined);
-                    }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </>
-              ) : (
-                <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setGroupEdit({
-                        value: fieldGroup.name,
-                        id: fieldGroup?.id,
-                      });
-                    }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  {fieldGroup.name}
-                </Typography>
-              )}
+              <EditableText
+                active={groupEditId === fieldGroup.id}
+                initialValue={fieldGroup.name}
+                onEdit={() => setGroupEditId(fieldGroup.id)}
+                onAccept={(value) =>
+                  onChange(
+                    fieldGroups.map((fieldGr) =>
+                      fieldGr.id === fieldGroup.id
+                        ? { ...fieldGr, name: value }
+                        : fieldGr
+                    )
+                  )
+                }
+                onCancel={() => setGroupEditId("")}
+              />
             </AccordionSummary>
             <IconButton
               onClick={() => {
