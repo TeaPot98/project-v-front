@@ -29,7 +29,7 @@ export const Container = () => {
           <Route path="patients" element={<Patients />} />
           <Route path="patients/create/:typeId" element={<PatientEdit />} />
           <Route path="patient-types" element={<PatientTypes />} />
-          <Route path="patient-types/create" element={<PatientTypeEdit />} />
+          <Route path="patient-types/edit/:id" element={<PatientTypeEdit />} />
         </Routes>
       </MuiContainer>
     </Box>

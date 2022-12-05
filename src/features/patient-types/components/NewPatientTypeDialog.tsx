@@ -12,11 +12,12 @@ import { Field } from "types";
 import { UserContext } from "context";
 import { useMutation } from "@tanstack/react-query";
 import api from "api";
+import models from "models";
 
 interface DialogProps {
   open: boolean;
   onClose?: () => void;
-  onConfirm?: () => void;
+  onConfirm?: (value: models.PatientType) => void;
   modalState?: { field?: Field; groupFieldId: string };
 }
 
@@ -24,7 +25,7 @@ interface Inputs {
   name: string;
 }
 
-export const PatientTypeDialogForm = ({
+export const NewPatientTypeDialog = ({
   open,
   onClose,
   onConfirm,
@@ -33,7 +34,7 @@ export const PatientTypeDialogForm = ({
   const { handleSubmit, register } = useForm<Inputs>();
 
   const createMutation = useMutation(api.patientType.create, {
-    onSuccess: () => onConfirm?.(),
+    onSuccess: (data) => onConfirm?.(data),
   });
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {

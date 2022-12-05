@@ -1,31 +1,41 @@
-import { useContext, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import { EditableText } from "components";
 import { FieldGroups } from "../components";
-import { NewPatientType } from "models/patient-type";
-import { UserContext } from "context";
+import { useParams } from "react-router-dom";
+
+import models from "models";
 import api from "api";
 
 export const PatientTypeEdit = () => {
-  const { user } = useContext(UserContext);
+  const { id } = useParams();
 
-  const [formState, setFormState] = useState<NewPatientType>({
+  const [formState, setFormState] = useState<models.PatientType>({
+    id: "",
     name: "",
     author: {
-      name: user!.name,
-      surname: user!.surname,
-      id: user!.id,
+      name: "",
+      surname: "",
+      id: "",
     },
     fieldGroups: [],
   });
 
-  const createMutation = useMutation((data: NewPatientType) =>
+  const { isLoading, data: patientType } = useQuery({
+    ...api.queries.patientType.byId(id!),
+    enabled: !!id,
+    onSuccess: (data) => setFormState(data),
+  });
+
+  const createMutation = useMutation((data: models.PatientType) =>
     api.patientType.create(data)
   );
+
+  if (isLoading || !patientType || !formState) return <div>is Loading</div>;
 
   return (
     <Box>
@@ -34,7 +44,7 @@ export const PatientTypeEdit = () => {
           bgcolor: "white",
           p: "1rem",
           borderRadius:
-            formState.fieldGroups.length === 0 ? "0.25rem" : undefined,
+            formState?.fieldGroups.length === 0 ? "0.25rem" : undefined,
           borderTopLeftRadius: "0.25rem",
           borderTopRightRadius: "0.25rem",
           display: "flex",
