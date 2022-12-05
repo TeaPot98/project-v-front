@@ -11,15 +11,14 @@ import IconButton from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Field } from "types";
-import { FieldGroup } from "types";
 import {
   FieldFormDialog,
   FormDialogProps,
   PatientTypeField,
 } from "../components";
-import { ConfirmationDialog } from "components";
-import { EditableText } from "components/EditableText/EditableText";
+import { Field } from "types";
+import { FieldGroup } from "types";
+import { ConfirmationDialog, EditableText } from "components";
 
 interface FieldGroupsProps {
   fieldGroups: FieldGroup[];
@@ -119,7 +118,7 @@ export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
               expandIcon={<ExpandMoreIcon />}
             >
               <EditableText
-                active={groupEditId === fieldGroup.id}
+                isActive={groupEditId === fieldGroup.id}
                 initialValue={fieldGroup.name}
                 onEdit={() => setGroupEditId(fieldGroup.id)}
                 onAccept={(value) =>

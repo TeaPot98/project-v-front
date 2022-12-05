@@ -10,20 +10,34 @@ import EditIcon from "@mui/icons-material/Edit";
 
 interface EditableTextProps {
   onAccept: (value: string) => void;
-  onEdit: () => void;
-  onCancel: () => void;
-  active: boolean;
   initialValue: string;
+  onEdit?: () => void;
+  onCancel?: () => void;
+  isActive?: boolean;
+  label?: string;
 }
 
 export const EditableText = ({
   onAccept,
   onEdit,
   onCancel,
-  active,
+  isActive,
   initialValue,
+  label,
 }: EditableTextProps) => {
+  const [active, setActive] = useState(!!isActive);
   const [value, setValue] = useState(initialValue);
+
+  const cancel = () => {
+    if (onCancel) return onCancel();
+    return setActive(false);
+  };
+
+  const edit = () => {
+    if (onEdit) return onEdit();
+    return setActive(true);
+  };
+
   return (
     <>
       {active ? (
@@ -34,12 +48,13 @@ export const EditableText = ({
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onClick={(e) => e.stopPropagation()}
+            label={label}
           />
           <IconButton
             onClick={(e) => {
               e.stopPropagation();
               onAccept(value);
-              onCancel();
+              cancel();
             }}
           >
             <CheckIcon />
@@ -47,7 +62,7 @@ export const EditableText = ({
           <IconButton
             onClick={(e) => {
               e.stopPropagation();
-              onCancel();
+              cancel();
             }}
           >
             <CloseIcon />
@@ -58,7 +73,7 @@ export const EditableText = ({
           <IconButton
             onClick={(e) => {
               e.stopPropagation();
-              onEdit();
+              edit();
             }}
           >
             <EditIcon />

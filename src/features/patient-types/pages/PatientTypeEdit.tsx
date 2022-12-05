@@ -3,8 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 
+import { EditableText } from "components";
 import { FieldGroups } from "../components";
 import { NewPatientType } from "models/patient-type";
 import { UserContext } from "context";
@@ -42,17 +42,14 @@ export const PatientTypeEdit = () => {
           justifyContent: "space-between",
         }}
       >
-        <TextField
-          autoFocus
-          label="Patient type name"
-          size="small"
-          onChange={(e) =>
+        <EditableText
+          initialValue={formState.name}
+          onAccept={(value) =>
             setFormState((prevState) => ({
               ...prevState,
-              name: e.target.value,
+              name: value,
             }))
           }
-          value={formState.name}
         />
         <Button
           variant="contained"

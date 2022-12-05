@@ -8,3 +8,4 @@ export * from "./Form";
 export * from "./InitialsAvatar";
 export * from "./Table";
 export * from "./ConfirmationDialog";
+export * from "./EditableText";
