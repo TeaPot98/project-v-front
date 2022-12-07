@@ -40,7 +40,7 @@ export const EditableText = ({
 
   return (
     <>
-      {active ? (
+      {(isActive !== undefined ? isActive : active) ? (
         <>
           <TextField
             autoFocus

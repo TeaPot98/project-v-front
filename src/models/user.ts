@@ -15,3 +15,5 @@ export enum UserRole {
   MODERATOR = "moderator",
   USER = "user",
 }
+
+export type Author = Omit<User, "role" | "username">;

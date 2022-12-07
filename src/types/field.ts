@@ -8,6 +8,7 @@ export interface Field {
   id: string;
   type: FieldType;
   name: string;
+  content?: string;
 }
 
 export enum FieldType {
@@ -16,4 +17,6 @@ export enum FieldType {
   NUMBER = "number",
   RANGE = "range",
   DATE = "date",
+  DATETIME = "date-time",
+  TIME = "time",
 }

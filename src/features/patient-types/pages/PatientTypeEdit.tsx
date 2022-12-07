@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 
 import models from "models";
 import api from "api";
+import { preventQueryRefetch } from "utils";
 
 export const PatientTypeEdit = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ export const PatientTypeEdit = () => {
     ...api.queries.patientType.byId(id!),
     enabled: !!id,
     onSuccess: (data) => setFormState(data),
+    ...preventQueryRefetch(),
   });
 
   const createMutation = useMutation((data: models.PatientType) =>

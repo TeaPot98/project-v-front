@@ -19,13 +19,19 @@ import {
 import { Field } from "types";
 import { FieldGroup } from "types";
 import { ConfirmationDialog, EditableText } from "components";
+import { PatientField } from "features/patients/components";
 
 interface FieldGroupsProps {
   fieldGroups: FieldGroup[];
   onChange: (value: FieldGroup[]) => void;
+  isPatient?: boolean;
 }
 
-export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
+export const FieldGroups = ({
+  fieldGroups,
+  onChange,
+  isPatient = false,
+}: FieldGroupsProps) => {
   const [expanded, setExpanded] = React.useState<string[]>([]);
 
   const [formModalOpen, setFormModalOpen] = useState(false);
@@ -66,6 +72,23 @@ export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
     setTimeout(() => {
       deleteModalState.current = undefined;
     }, 0);
+  };
+
+  const editField = (fieldGroup: FieldGroup, field: Field) => {
+    formModalState.current = {
+      groupFieldId: fieldGroup.id,
+      field,
+    };
+    setFormModalOpen(true);
+  };
+
+  const deleteField = (fieldGroup: FieldGroup, field: Field) => {
+    deleteModalState.current = {
+      message: `field ${field.name} of type ${field.type}`,
+      groupId: fieldGroup.id,
+      fieldId: field.id,
+    };
+    setDeleteModalOpen(true);
   };
 
   const saveField = (values: Omit<Field, "id">) => {
@@ -146,28 +169,26 @@ export const FieldGroups = ({ fieldGroups, onChange }: FieldGroupsProps) => {
             </IconButton>
           </Box>
           <AccordionDetails>
-            {fieldGroup.fields.map((field) => (
-              <PatientTypeField
-                key={field.id}
-                type={field.type}
-                name={field.name}
-                onEdit={() => {
-                  formModalState.current = {
-                    groupFieldId: fieldGroup.id,
-                    field,
-                  };
-                  setFormModalOpen(true);
-                }}
-                onDelete={() => {
-                  deleteModalState.current = {
-                    message: `field ${field.name} of type ${field.type}`,
-                    groupId: fieldGroup.id,
-                    fieldId: field.id,
-                  };
-                  setDeleteModalOpen(true);
-                }}
-              />
-            ))}
+            {fieldGroup.fields.map((field) =>
+              isPatient ? (
+                <PatientField
+                  key={field.id}
+                  type={field.type}
+                  name={field.name}
+                  value={field.content || ""}
+                  onEdit={() => editField(fieldGroup, field)}
+                  onDelete={() => deleteField(fieldGroup, field)}
+                />
+              ) : (
+                <PatientTypeField
+                  key={field.id}
+                  type={field.type}
+                  name={field.name}
+                  onEdit={() => editField(fieldGroup, field)}
+                  onDelete={() => deleteField(fieldGroup, field)}
+                />
+              )
+            )}
             <Button
               variant="outlined"
               sx={{
