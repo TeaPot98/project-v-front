@@ -21,4 +21,12 @@ export const fieldTypes = [
     key: FieldType.RANGE,
     label: "Range",
   },
+  {
+    key: FieldType.DATETIME,
+    label: "Date & Time",
+  },
+  {
+    key: FieldType.TIME,
+    label: "Time",
+  },
 ];
