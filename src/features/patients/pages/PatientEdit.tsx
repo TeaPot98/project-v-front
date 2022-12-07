@@ -26,12 +26,12 @@ export const PatientEdit = () => {
   const { isLoading } = useQuery({
     ...api.queries.patientType.byId(typeId!),
     enabled: !!typeId,
-    ...preventQueryRefetch(),
     onSuccess: (data) =>
       setFormState((prevState) => ({
         ...prevState,
         fieldGroups: data.fieldGroups,
       })),
+    ...preventQueryRefetch(),
   });
 
   return (

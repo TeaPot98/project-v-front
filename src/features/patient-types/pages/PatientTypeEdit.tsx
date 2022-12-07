@@ -34,7 +34,7 @@ export const PatientTypeEdit = () => {
   });
 
   const createMutation = useMutation((data: models.PatientType) =>
-    api.patientType.create(data)
+    api.patientType.edit(data)
   );
 
   if (isLoading || !patientType || !formState) return <div>is Loading</div>;
