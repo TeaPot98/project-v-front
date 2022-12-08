@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 import { ConfirmationDialog, Table, TableColumn } from "components";
 import models from "models";
@@ -22,8 +23,8 @@ interface DeleteModalState {
 }
 
 export const Patients = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [modalState, setModalState] = useState<DeleteModalState>({
     open: false,
     message: "",
@@ -51,20 +52,25 @@ export const Patients = () => {
         `${value.author.name} ${value.author.surname}`,
     },
     {
-      id: "id",
+      id: "actions",
       label: "Actions",
       format: (value: models.Patient) => (
-        <IconButton
-          onClick={() => {
-            setModalState({
-              open: true,
-              message: `patient ${value.name} ${value.surname}`,
-              patientId: value.id,
-            });
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>
+        <>
+          <IconButton onClick={() => navigate(`/patients/edit/${value.id}`)}>
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              setModalState({
+                open: true,
+                message: `patient ${value.name} ${value.surname}`,
+                patientId: value.id,
+              });
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </>
       ),
     },
   ];

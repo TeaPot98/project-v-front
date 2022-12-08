@@ -12,8 +12,8 @@ import { preventQueryRefetch } from "utils";
 import { UserContext } from "context";
 import { EditableText } from "components";
 
-export const PatientEdit = () => {
-  const { id } = useParams();
+export const PatientCreate = () => {
+  const { typeId } = useParams();
   const { user } = useContext(UserContext);
 
   const [formState, setFormState] = useState<models.Patient>({
@@ -28,23 +28,25 @@ export const PatientEdit = () => {
     fieldGroups: [],
   });
 
-  const updateMutation = useMutation(api.patient.update);
+  const createMutation = useMutation(api.patient.create);
 
-  const { isLoading, data } = useQuery({
-    ...api.queries.patient.byId(id!),
-    enabled: !!id,
-    onSuccess: (data) => setFormState(data),
+  useQuery({
+    ...api.queries.patientType.byId(typeId!),
+    enabled: !!typeId,
+    onSuccess: (data) =>
+      setFormState((prevState) => ({
+        ...prevState,
+        fieldGroups: data.fieldGroups,
+      })),
     ...preventQueryRefetch(),
   });
-
-  if (isLoading) return <></>;
 
   return (
     <Box>
       <Button
         variant="contained"
         sx={{ display: "block", mb: "1rem", ml: "auto" }}
-        onClick={() => updateMutation.mutate(formState)}
+        onClick={() => createMutation.mutate(formState)}
       >
         Save
       </Button>
@@ -60,14 +62,14 @@ export const PatientEdit = () => {
       >
         <EditableText
           label="Prenume"
-          initialValue={data.name}
+          initialValue={formState.name}
           onAccept={(value) =>
             setFormState((prevState) => ({ ...prevState, name: value }))
           }
         />
         <EditableText
           label="Nume"
-          initialValue={data.surname}
+          initialValue={formState.surname}
           onAccept={(value) =>
             setFormState((prevState) => ({ ...prevState, surname: value }))
           }
