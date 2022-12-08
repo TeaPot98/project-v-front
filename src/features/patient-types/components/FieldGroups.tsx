@@ -176,6 +176,27 @@ export const FieldGroups = ({
                   type={field.type}
                   name={field.name}
                   value={field.content || ""}
+                  onChange={(value) =>
+                    onChange(
+                      (() => {
+                        const fieldId = field.id;
+                        const groupId = fieldGroup.id;
+                        return fieldGroups.map((fieldGroup) => {
+                          if (fieldGroup.id === groupId) {
+                            return {
+                              ...fieldGroup,
+                              fields: fieldGroup.fields.map((f) =>
+                                f.id === fieldId
+                                  ? { ...f, content: value || "" }
+                                  : f
+                              ),
+                            };
+                          }
+                          return fieldGroup;
+                        });
+                      })()
+                    )
+                  }
                   onEdit={() => editField(fieldGroup, field)}
                   onDelete={() => deleteField(fieldGroup, field)}
                 />

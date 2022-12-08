@@ -3,6 +3,7 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
@@ -41,7 +42,7 @@ export const EditableText = ({
   return (
     <>
       {(isActive !== undefined ? isActive : active) ? (
-        <>
+        <Box>
           <TextField
             autoFocus
             size="small"
@@ -67,7 +68,7 @@ export const EditableText = ({
           >
             <CloseIcon />
           </IconButton>
-        </>
+        </Box>
       ) : (
         <Typography sx={{ width: "33%", flexShrink: 0 }}>
           <IconButton

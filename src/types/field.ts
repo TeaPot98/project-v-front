@@ -15,7 +15,6 @@ export enum FieldType {
   TEXT = "text",
   TEXTAREA = "textarea",
   NUMBER = "number",
-  RANGE = "range",
   DATE = "date",
   DATETIME = "date-time",
   TIME = "time",

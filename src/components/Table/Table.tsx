@@ -13,7 +13,7 @@ export interface TableColumn {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: any) => string;
+  format?: (value: any) => React.ReactNode;
 }
 
 interface TableProps {
@@ -68,13 +68,12 @@ export const Table = ({ columns = [], rows = [] }: TableProps) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
-                      const value = row[column.id];
                       return (
                         <TableCell
                           key={column.id as string}
                           align={column.align}
                         >
-                          {column.format ? column.format(value) : value}
+                          {column.format ? column.format(row) : row[column.id]}
                         </TableCell>
                       );
                     })}

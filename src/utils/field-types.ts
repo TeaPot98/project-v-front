@@ -18,10 +18,6 @@ export const fieldTypes = [
     label: "Number",
   },
   {
-    key: FieldType.RANGE,
-    label: "Range",
-  },
-  {
     key: FieldType.DATETIME,
     label: "Date & Time",
   },
