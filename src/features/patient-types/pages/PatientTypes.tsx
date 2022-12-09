@@ -17,8 +17,8 @@ const columns: TableColumn[] = [
     label: "Author",
     minWidth: 170,
     align: "right",
-    format: (value: models.PatientType["author"]) =>
-      `${value.name} ${value.surname}`,
+    format: (value: models.PatientType) =>
+      `${value.author.name} ${value.author.surname}`,
   },
 ];
 

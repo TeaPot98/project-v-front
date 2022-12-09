@@ -15,14 +15,12 @@ export const Users = () => {
       label: "Username",
       minWidth: 170,
       align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
     },
     {
       id: "role",
       label: "Role",
       minWidth: 170,
       align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
     },
   ];
 
