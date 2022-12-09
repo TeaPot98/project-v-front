@@ -37,7 +37,7 @@ export const PatientEdit = () => {
     ...preventQueryRefetch(),
   });
 
-  if (isLoading) return <></>;
+  if (isLoading || !data) return <></>;
 
   return (
     <Box>
@@ -60,7 +60,7 @@ export const PatientEdit = () => {
       >
         <EditableText
           label="Prenume"
-          initialValue={data.name}
+          initialValue={formState.name}
           onAccept={(value) =>
             setFormState((prevState) => ({ ...prevState, name: value }))
           }
