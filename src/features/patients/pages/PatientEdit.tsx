@@ -53,8 +53,10 @@ export const PatientEdit = () => {
           bgcolor: "white",
           p: "1rem 1.5rem",
           display: "flex",
-          flexDirection: "column",
+          flexWrap: "wrap",
+          // flexDirection: "column",
           alignItems: "center",
+          justifyContent: "space-between",
           gap: "0.5rem",
         }}
       >
