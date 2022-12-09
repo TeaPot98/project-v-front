@@ -9,12 +9,6 @@ export const patientType = {
     );
     return data;
   },
-  edit: async (patientType: models.PatientType) => {
-    const { data } = await axios.put<models.PatientType>(
-      `/patient-types/${patientType.id}`
-    );
-    return data;
-  },
   getAll: async () => {
     const { data } = await axios.get<models.PatientType[]>("/patient-types");
     return data;
@@ -23,6 +17,16 @@ export const patientType = {
     const { data } = await axios.get<models.PatientType>(
       `/patient-types/${id}`
     );
+    return data;
+  },
+  edit: async (patientType: models.PatientType) => {
+    const { data } = await axios.put<models.PatientType>(
+      `/patient-types/${patientType.id}`
+    );
+    return data;
+  },
+  remove: async (id: string) => {
+    const { data } = await axios.delete(`/patient-types/${id}`);
     return data;
   },
 };
