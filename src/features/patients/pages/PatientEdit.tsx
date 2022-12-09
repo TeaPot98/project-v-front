@@ -58,6 +58,11 @@ export const PatientEdit = () => {
           alignItems: "center",
           justifyContent: "space-between",
           gap: "0.5rem",
+          borderRadius: "0.25rem",
+          borderBottomLeftRadius:
+            formState.fieldGroups.length > 0 ? "0rem" : "auto",
+          borderBottomRightRadius:
+            formState.fieldGroups.length > 0 ? "0rem" : "auto",
         }}
       >
         <EditableText
