@@ -55,7 +55,9 @@ export const PatientTypes = () => {
       label: "Actions",
       format: (value: models.PatientType) => (
         <>
-          <IconButton onClick={() => navigate(`/patients/edit/${value.id}`)}>
+          <IconButton
+            onClick={() => navigate(`/patient-types/edit/${value.id}`)}
+          >
             <EditIcon />
           </IconButton>
           <IconButton

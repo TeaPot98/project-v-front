@@ -44,6 +44,7 @@ export const Table = ({ columns = [], rows = [] }: TableProps) => {
         overflowY: "hidden",
         display: "flex",
         flexDirection: "column",
+        borderRadius: "0.25rem",
       }}
     >
       <TableContainer>
