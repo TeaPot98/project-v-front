@@ -47,6 +47,7 @@ export const LoginForm = () => {
         fullWidth
         size="small"
         label="Password"
+        type="password"
         {...register("password")}
       />
       <Button variant="contained" type="submit">

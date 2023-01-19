@@ -22,12 +22,17 @@ export interface SignUpFormInputs {
   role: UserRole;
 }
 
-export const SignUpForm = () => {
+interface SignUpFormProps {
+  onSubmit?: () => void;
+}
+
+export const SignUpForm = ({ onSubmit: customOnSubmit }: SignUpFormProps) => {
   const { register, handleSubmit } = useForm<SignUpFormInputs>();
 
-  const signUpMutation = useMutation((credentials: SignUpFormInputs) =>
-    api.auth.signUp(credentials)
-  );
+  const signUpMutation = useMutation({
+    mutationFn: (credentials: SignUpFormInputs) => api.auth.signUp(credentials),
+    onSuccess: customOnSubmit,
+  });
 
   const onSubmit: SubmitHandler<SignUpFormInputs> = (data) => {
     signUpMutation.mutate(data);
@@ -53,6 +58,7 @@ export const SignUpForm = () => {
         fullWidth
         size="small"
         label="Password"
+        type="password"
         {...register("password")}
       />
       <FormControl>

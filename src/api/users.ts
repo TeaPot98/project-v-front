@@ -6,6 +6,10 @@ export const users = {
     const { data } = await axios.get<models.User[]>("users");
     return data;
   },
+  remove: async (userId: string) => {
+    const { data } = await axios.delete(`users/${userId}`);
+    return data;
+  },
 };
 
 export const userQueries = {
