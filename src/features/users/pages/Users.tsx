@@ -35,7 +35,7 @@ export const Users = () => {
       }),
   });
 
-  const { data } = useQuery({ ...api.queries.users.all() });
+  const { data, isLoading } = useQuery({ ...api.queries.users.all() });
   const columns: TableColumn[] = [
     {
       id: "name",
@@ -99,7 +99,7 @@ export const Users = () => {
       >
         New User
       </Button>
-      <Table columns={columns} rows={users} />
+      <Table isLoading={isLoading} columns={columns} rows={users} />
       <NewUserDialog
         open={newUserModalOpen}
         onClose={() => setNewUserModalOpen(false)}

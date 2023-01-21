@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export interface TableColumn {
   id: any;
@@ -19,9 +20,14 @@ export interface TableColumn {
 interface TableProps {
   rows?: Record<any, any>[];
   columns?: TableColumn[];
+  isLoading?: boolean;
 }
 
-export const Table = ({ columns = [], rows = [] }: TableProps) => {
+export const Table = ({
+  columns = [],
+  rows = [],
+  isLoading = false,
+}: TableProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -48,41 +54,47 @@ export const Table = ({ columns = [], rows = [] }: TableProps) => {
       }}
     >
       <TableContainer>
-        <MuiTable stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id as string}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    {columns.map((column) => {
-                      return (
-                        <TableCell
-                          key={column.id as string}
-                          align={column.align}
-                        >
-                          {column.format ? column.format(row) : row[column.id]}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </MuiTable>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <MuiTable stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id as string}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {columns.map((column) => {
+                        return (
+                          <TableCell
+                            key={column.id as string}
+                            align={column.align}
+                          >
+                            {column.format
+                              ? column.format(row)
+                              : row[column.id]}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </MuiTable>
+        )}
       </TableContainer>
       <TablePagination
         sx={{ overflowY: "hidden" }}

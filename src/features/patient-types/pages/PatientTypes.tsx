@@ -31,7 +31,7 @@ export const PatientTypes = () => {
     patientTypeId: "",
   });
 
-  const { data } = useQuery({ ...api.queries.patientType.all() });
+  const { data, isLoading } = useQuery({ ...api.queries.patientType.all() });
 
   const deleteMutation = useMutation(api.patientType.remove, {
     onSuccess: () =>
@@ -89,7 +89,7 @@ export const PatientTypes = () => {
       >
         New Patient Type
       </Button>
-      <Table columns={columns} rows={data} />
+      <Table isLoading={isLoading} columns={columns} rows={data} />
       <NewPatientTypeDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}

@@ -31,7 +31,9 @@ export const Patients = () => {
     patientId: "",
   });
 
-  const { data: patients } = useQuery({ ...api.queries.patient.all() });
+  const { data: patients, isLoading } = useQuery({
+    ...api.queries.patient.all(),
+  });
 
   const deleteMutation = useMutation(api.patient.remove, {
     onSuccess: () =>
@@ -108,7 +110,7 @@ export const Patients = () => {
           </>
         )}
       </PopupState>
-      <Table columns={columns} rows={patients} />
+      <Table isLoading={isLoading} columns={columns} rows={patients} />
       <ConfirmationDialog
         open={modalState.open}
         title="Delete"

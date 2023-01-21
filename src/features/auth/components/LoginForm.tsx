@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 
+import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -50,6 +51,9 @@ export const LoginForm = () => {
         type="password"
         {...register("password")}
       />
+      <Link component={ReactRouterLink} to="/change-password">
+        Change password
+      </Link>
       <Button variant="contained" type="submit">
         Login
       </Button>

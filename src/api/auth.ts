@@ -18,4 +18,10 @@ export const auth = {
     });
     return data;
   },
+  changePassword: async (
+    credentials: LoginFormInputs & { newPassword: string }
+  ) => {
+    const { data } = await axios.post("auth/change-password", credentials);
+    return data;
+  },
 };
