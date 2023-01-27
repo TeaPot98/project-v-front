@@ -1,7 +1,8 @@
 import $axios from "axios";
 
 export const axios = $axios.create({
-  baseURL: "http://localhost:3001/api/",
+  baseURL: "https://summer-bush-7025.fly.dev/api/",
+  // baseURL: "http://localhost:3001/api/",
 });
 
 export const initializeAxios = (token: string) => {
